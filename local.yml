@@ -47,12 +47,11 @@
 
   - name: install basic packages (debian)
     apt:
-      name: "{{ item }}"
+      name: "chromium"
       state: installed
-    with_items:
-      - "chromium"
-      when: ansible_distribution in ["Debian"]
-
+    changed_when: False
+    when: ansible_distribution in ["Debian"]
+      
   - name: Remove SW
     apt: 
       name: "{{ item }}"
