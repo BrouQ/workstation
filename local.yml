@@ -49,14 +49,12 @@
     package:
       name:
         - "chromium"
-      changed_when: False
       when: ansible_distribution in ["Debian"]
 
   - name: install basic packages (ubuntu)
     package:
       name:
         - "chromium-browser"
-      changed_when: False
       when: ansible_distribution in ["Ubuntu"]
 
   - name: Remove SW
