@@ -1,0 +1,78 @@
+# zakladni natstaveni pro notebook, debian xfce
+---
+- hosts: localhost
+  connection: local
+  become: true
+  
+  tasks:
+  - name: Install basic utils and sw
+    package:
+      name:
+        - "vim"
+        - "htop"
+        - "git"
+        - "tree"
+        - "sudo"
+        - "ufw"
+        - "gimp"
+        - "inkscape"
+        - "chromium-browser"
+        - "kazam"
+        - "stellarium"
+        - "vlc"
+        - "libreoffice"
+        - "p7zip-rar"
+        - "putty"
+        - "fonts-crosextra-carlito"
+        - "fonts-crosextra-caladea"
+        - "owncloud-client"
+        - "git"
+        - "tmux"
+        - "clementine"
+        - "openshot"
+        - "audacity"
+        - "filezilla"
+        - "keepassx"
+        - "lshw"
+        - "openvpn"
+        - "network-manager-openvpn"
+        - "network-manager-openvpn-gnome"
+
+  - name: Remove SW
+    apt: 
+      name: "{{ item }}"
+      state: absent
+    with_items:
+      - "thunderbird*"
+      - 
+
+  - name: copy printer driver
+    copy:
+      src: files/kyodialog_4.0-0_amd64.deb
+      dest: /tmp/kyodialog_4.0-0_amd64.deb
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: install printer driver
+    apt: 
+      deb: /tmp/kyodialog_4.0-0_amd64.deb
+      state: installed
+
+  - name: ufw allow OpenSSh
+    ufw:
+      rule: allow
+      name: OpenSSH
+
+  - name: ufw set limit to SSH
+    ufw:
+      rule: limit
+      port: ssh
+      proto: tcp
+
+  - name: ufw enable
+    ufw:
+      state: enabled
+      policy: allow
+
+...
