@@ -78,7 +78,7 @@
   - name: install printer driver
     apt: 
       deb: /tmp/kyodialog_4.0-0_amd64.deb
-      state: installed
+      state: present
 
   - name: ufw allow OpenSSh
     ufw:
