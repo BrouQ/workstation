@@ -4,8 +4,14 @@
   connection: local
   become: true
   
+  pre_tasks:
+    - name: pre-run | update package chache (debian, ubuntu)
+      apt: update_chache=yes
+      changed_when: False
+      when: ansible_distribution in ["Debian","Ubuntu"]
+  
   tasks:
-  - name: Install basic utils and sw
+  - name: install basic packages (debian, ubuntu)
     package:
       name:
         - "vim"
@@ -16,7 +22,7 @@
         - "ufw"
         - "gimp"
         - "inkscape"
-        - "chromium-browser"
+        - "chromium"
         - "kazam"
         - "stellarium"
         - "vlc"
@@ -37,6 +43,21 @@
         - "openvpn"
         - "network-manager-openvpn"
         - "network-manager-openvpn-gnome"
+        - "python3"
+
+  - name: install basic packages (debian)
+    package:
+      name:
+        - "chromium"
+      changed_when: False
+      when: ansible_distribution in ["Debian"]
+
+  - name: install basic packages (ubuntu)
+    package:
+      name:
+        - "chromium-browser"
+      changed_when: False
+      when: ansible_distribution in ["Ubuntu"]
 
   - name: Remove SW
     apt: 
