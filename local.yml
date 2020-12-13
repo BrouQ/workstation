@@ -46,16 +46,12 @@
         - "python3"
 
   - name: install basic packages (debian)
-    package:
-      name:
-        - "chromium"
+    apt:
+      name: "{{ item }}"
+      state: installed
+    with_items:
+      - "chromium"
       when: ansible_distribution in ["Debian"]
-
-  - name: install basic packages (ubuntu)
-    package:
-      name:
-        - "chromium-browser"
-      when: ansible_distribution in ["Ubuntu"]
 
   - name: Remove SW
     apt: 
