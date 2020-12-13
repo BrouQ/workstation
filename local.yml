@@ -48,9 +48,16 @@
   - name: install basic packages (debian)
     apt:
       name: "chromium"
-      state: installed
+      state: present
     changed_when: False
     when: ansible_distribution in ["Debian"]
+
+  - name: install basic packages (ubuntu)
+    apt:
+      name: "chromium-browser"
+      state: present
+    changed_when: False
+    when: ansible_distribution in ["Ubuntu"]
       
   - name: Remove SW
     apt: 
